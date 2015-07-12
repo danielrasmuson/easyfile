@@ -78,9 +78,19 @@ file.write = function (path, data, options){
     return writeFile(path, data, options);
 };
 
+file.read = function (path, callback){
+    fs.readFile(path, "utf8", function (error, data) {
+      if (error){
+        callback(error);
+      } else{
+        callback(data);
+      }
+    });
+}
+
 function writeFile(filename, data, options){
 
-    if (options.force && file.exists(filename)) {
+    if (options && options.force && file.exists(filename)) {
         if (options.backup) {
             var backupBasePath = filename + ".~";
             var backupPath = backupBasePath;
